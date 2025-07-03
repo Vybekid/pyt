@@ -1,1 +1,3 @@
-while True: print(eval(input(">>>")))
+name_tag = "Mehn, im home my niggas"
+
+print(f'Hello my niggas {name_tag}')
