@@ -3,28 +3,31 @@ from turtle import *
 
 # --- Setup the screen and turtle ---
 bgcolor("black")
-speed(0)          # Use the fastest drawing speed
-pensize(2)        # A slightly thicker line looks good
+speed(0)
+pensize(2)
 hideturtle()
 
 # --- Settings for the pattern ---
-num_circles = 36  # The number of circles to draw
-radius = 150      # The radius of each circle
-hue = 0.0         # Starting hue for the color cycle
+num_stars = 75     # How many stars to draw in the spiral
+hue = 0.0          # The starting color
 
 # --- Main drawing loop ---
-for _ in range(num_circles):
-    # Calculate a color from the rainbow spectrum
+for i in range(1, num_stars + 1):
+    # Calculate the color for this star
     color = colorsys.hsv_to_rgb(hue, 1.0, 1.0)
     pencolor(color)
     
-    # 1. Draw a complete circle
-    circle(radius)
+    # 1. Draw one star
+    begin_fill()  # Optional: to fill the stars with color
+    for _ in range(5):
+        forward(i * 4)  # The stars get bigger as 'i' increases
+        right(144)      # The angle to make a 5-pointed star
+    end_fill()    # Optional: finish filling the star
     
-    # 2. Rotate the turtle for the next circle
-    left(360 / num_circles)
+    # 2. Rotate the turtle to position for the next star
+    right(360 / num_stars + 1)
     
-    # 3. Advance the hue to get the next color in the rainbow
-    hue += 1.0 / num_circles
-
-done() # Keep the window open
+    # 3. Advance to the next color
+    hue += 1.0 / num_stars
+    
+done()
