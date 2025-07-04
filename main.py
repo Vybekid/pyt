@@ -1,42 +1,30 @@
-import random
+import colorsys
 from turtle import *
 
 # --- Setup the screen and turtle ---
 bgcolor("black")
-pencolor("green")   # The tree will be green
-speed(0)
+speed(0)          # Use the fastest drawing speed
+pensize(2)        # A slightly thicker line looks good
 hideturtle()
 
-# Position the turtle to start at the bottom
-left(90)
-penup()
-backward(250)
-pendown()
+# --- Settings for the pattern ---
+num_circles = 36  # The number of circles to draw
+radius = 150      # The radius of each circle
+hue = 0.0         # Starting hue for the color cycle
 
-# --- The recursive function that draws the tree ---
-def draw_branch(branch_length):
-    if branch_length > 10:  # The condition to stop the recursion
-        # 1. Draw the main branch
-        forward(branch_length)
+# --- Main drawing loop ---
+for _ in range(num_circles):
+    # Calculate a color from the rainbow spectrum
+    color = colorsys.hsv_to_rgb(hue, 1.0, 1.0)
+    pencolor(color)
+    
+    # 1. Draw a complete circle
+    circle(radius)
+    
+    # 2. Rotate the turtle for the next circle
+    left(360 / num_circles)
+    
+    # 3. Advance the hue to get the next color in the rainbow
+    hue += 1.0 / num_circles
 
-        # 2. Save the current position and heading
-        position_stack.append(pos())
-        heading_stack.append(heading())
-        
-        # 3. Turn and draw the right sub-branch (recursively)
-        right(random.randint(15, 30))
-        draw_branch(branch_length * random.uniform(0.6, 0.9))
-        
-        # 4. Restore position and draw the left sub-branch
-        penup()
-        setpos(position_stack.pop())
-        setheading(heading_stack.pop())
-        pendown()
-        left(random.randint(15, 30))
-        draw_branch(branch_length * random.uniform(0.6, 0.9))
-
-# --- Start the drawing process ---
-position_stack = []
-heading_stack = []
-draw_branch(100)
-done()
+done() # Keep the window open
